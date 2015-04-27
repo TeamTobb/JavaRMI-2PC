@@ -1,5 +1,6 @@
+import java.io.Serializable;
 
-class SubTransaction {
+class SubTransaction implements Serializable {
     String db_name;
     String query;
 
