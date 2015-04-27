@@ -16,7 +16,7 @@ public class CoordinatorHost {
         coordinatorImpl.newCohort("jdbc:mysql://10.0.1.7:8889/Bil", "db", "db", "BilDB");
         coordinatorImpl.newCohort("jdbc:mysql://10.0.1.7:8889/Fly", "db", "db", "FlyDB");
         SubTransaction trans1 = new SubTransaction("BilDB", "INSERT INTO biler VALUES(DEFAULT,'brafarg')");
-        SubTransaction trans2 = new SubTransaction("FlyDB", "INSERT INTO biletter VALUES(DEFaAULT,'passasjer')");
+        SubTransaction trans2 = new SubTransaction("FlyDB", "INSERT INTO biletter VALUES(DEFAULT,'passasjer')");
         ArrayList<SubTransaction> test = new ArrayList<>();
         test.add(trans1);
         test.add(trans2);

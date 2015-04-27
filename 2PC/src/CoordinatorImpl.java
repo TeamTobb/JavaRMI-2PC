@@ -1,10 +1,12 @@
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-class CoordinatorImpl extends UnicastRemoteObject implements Coordinator{
+class CoordinatorImpl extends UnicastRemoteObject implements Coordinator {
 	private ArrayList<Cohort> cohorts = new ArrayList<>();
-	List<Boolean> votes = Collections.synchronizedList(new ArrayList<Boolean>()); 
+	List<Boolean> votes = Collections.synchronizedList(new ArrayList<>());
 
 	public void newCohort(String databaseURL, String user, String pass, String name)throws RemoteException {
 		this.cohorts.add(new CohortImpl(databaseURL, user, pass, name));

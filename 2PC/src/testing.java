@@ -1,6 +1,7 @@
-import java.sql.*;
-
-import static javax.swing.JOptionPane.showMessageDialog;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
  * Created by Jorgen on 27/04/15.
