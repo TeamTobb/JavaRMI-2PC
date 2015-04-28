@@ -1,8 +1,8 @@
 package Application;
 
+import Cohort.CohortImpl;
 import Cohort.Cohort;
 import Coordinator.CoordinatorImpl;
-import Transaction.SubTransaction;
 import Misc.Config;
 
 import javax.swing.*;
@@ -12,17 +12,21 @@ import java.awt.event.ActionListener;
 import java.io.PrintStream;
 import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
-import java.util.ArrayList;
 
-public class CoordinatorHost extends JFrame{
-    private CoordinatorImpl coordinator;
+
+
+
+public class CohortHost extends JFrame {
+    private CohortImpl cohort;
     private JTextArea textArea = new JTextArea(15, 30);
     private TextAreaOutputStream taOutputStream = new TextAreaOutputStream(
-            textArea, "hei");
+            textArea, "Log");
+    private String objectname;
 
-    public CoordinatorHost(CoordinatorImpl coordinator){
+    public CohortHost(CohortImpl cohort, String objectname){
         super();
-        this.coordinator = coordinator;
+        this.objectname = objectname;
+        this.cohort = cohort;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new FlowLayout());
         add(new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
@@ -35,13 +39,13 @@ public class CoordinatorHost extends JFrame{
 
         recoverButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                coordinator.recover();
+                cohort.recover();
             }
         });
         exitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Naming.unbind(Config.COORD_ADRESS);
+                    Naming.unbind(objectname);
                 }catch(Exception ex){
                     ex.printStackTrace();
                 }
@@ -56,13 +60,19 @@ public class CoordinatorHost extends JFrame{
     public static void main(String[] args){
         try{
             LocateRegistry.createRegistry(2020);
-            CoordinatorImpl coordinatorImpl = new CoordinatorImpl();
-            CoordinatorHost gui = new CoordinatorHost(coordinatorImpl);
-            gui.setVisible(true);
-            String objectName = Config.COORD_ADRESS;
-            Naming.rebind(objectName, coordinatorImpl);
-            System.out.println("RMI-objekt er registrert");
+
         } catch(Exception e){
+            e.printStackTrace();
+        }
+        try {
+            CohortImpl cohortImpl = new CohortImpl(args[0], args[1], args[2], args[3]);
+            String objectName = "//localhost:2020/CohortImpl" + args[4];
+            Naming.rebind(objectName, cohortImpl);
+            System.out.println("RMI-objekt er registrert");
+
+            CohortHost gui = new CohortHost(cohortImpl, objectName);
+            gui.setVisible(true);
+        }catch(Exception e){
             e.printStackTrace();
         }
     }

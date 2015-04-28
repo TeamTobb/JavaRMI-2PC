@@ -4,12 +4,15 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
-public class CoordinatorLogger {
+public class CoordinatorLogger implements Serializable{
     private String fileName;
     private FileWriter fileWriter;
 
@@ -17,15 +20,19 @@ public class CoordinatorLogger {
         this.fileName = dbName + ".json";
     }
 
+    public CoordinatorLogger(){
+    }
+
     public void log(CoordinatorLog logItem) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         try {
-            //overwrite data if status == init
             if(logItem.getStatus().toString().equals("INIT")){
                 this.fileWriter = new FileWriter(fileName, false);
+                fileWriter.write('[');
             }else{
                 this.fileWriter = new FileWriter(fileName, true);
+                fileWriter.write(',');
             }
             mapper.writeValue(fileWriter, logItem);
             fileWriter.close();
@@ -34,14 +41,35 @@ public class CoordinatorLogger {
         }
     }
 
-    public static List<CoordinatorLog> getLogItems() {
+    public List<CoordinatorLog> getLogItems() {
         ObjectMapper mapper = new ObjectMapper();
-        List<CoordinatorLog> logItems = null;
+        ArrayList<CoordinatorLog>logItems = null;
+
         try {
-            logItems = mapper.readValue(new File("Coordinatorlog.json"), new TypeReference<List<CoordinatorLog>>(){});
+            byte[] encoded = Files.readAllBytes(Paths.get(fileName));
+            String jsonAsString = new String(encoded, Charset.defaultCharset());
+            jsonAsString+="]";
+            Collection<CoordinatorLog> items = new ObjectMapper().readValue(jsonAsString, new TypeReference<Collection<CoordinatorLog>>() { });
+            logItems=new ArrayList<>(items);
         } catch (IOException e) {
             e.printStackTrace();
         }
         return logItems;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public FileWriter getFileWriter() {
+        return fileWriter;
+    }
+
+    public void setFileWriter(FileWriter fileWriter) {
+        this.fileWriter = fileWriter;
     }
 }

@@ -13,6 +13,9 @@ public class Transaction implements Serializable{
         this.transID = new Date().getTime();
     }
 
+    public Transaction(){
+    }
+
     public ArrayList<SubTransaction> getSubTransactions() {
         return subTransactions;
     }
@@ -28,4 +31,5 @@ public class Transaction implements Serializable{
     public void setTransID(long transID) {
         this.transID = transID;
     }
+
 }

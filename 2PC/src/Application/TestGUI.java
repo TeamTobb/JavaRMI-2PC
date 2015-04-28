@@ -1,7 +1,9 @@
 package Application;
 
 import Coordinator.Coordinator;
+import Misc.Config;
 import Transaction.SubTransaction;
+import Cohort.Cohort;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,25 +21,27 @@ public class TestGUI extends JFrame{
     public TestGUI(Coordinator coordinator) throws Exception{
         super();
         this.coordinator = coordinator;
-        createCohorts();
+//        createCohorts();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new FlowLayout());
 
         JButton but1 = new JButton("Hans bestiller pakkereise. Det er nok pakkereiser.");
         but1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e){
+            public void actionPerformed(ActionEvent e) {
                 try {
-                    for(int i = 0; i<100; i++) {
-                        SubTransaction trans1 = new SubTransaction("BilDB", "INSERT INTO biler VALUES(DEFAULT,'brafarg')");
-                        SubTransaction trans2 = new SubTransaction("FlyDB", "INSERT INTO biletter VALUES(DEFAULT,'passasjer')");
-                        ArrayList<SubTransaction> test = new ArrayList<>();
-                        test.add(trans1);
-                        test.add(trans2);
+//                    for(int i = 0; i<100; i++) {
+                    coordinator.newCohort((Cohort)Naming.lookup("rmi://localhost:2020/CohortImpl1"));
+                    coordinator.newCohort((Cohort)Naming.lookup("rmi://localhost:2020/CohortImpl2"));
+                    SubTransaction trans1 = new SubTransaction("BilDB", "INSERT INTO biler VALUES(DEFAULT,'brafarg')");
+                    SubTransaction trans2 = new SubTransaction("FlyDB", "INSERT INTO biletter VALUES(DEFAULT,'passasjer')");
+                    ArrayList<SubTransaction> sts = new ArrayList<>();
+                    sts.add(trans1);
+                    sts.add(trans2);
 
-                        boolean transaction = coordinator.transaction(test);
+                    boolean transaction = coordinator.transaction(sts);
 //                        Thread.sleep(100);
-                    }
-                }catch(Exception ex){
+//                    }
+                } catch (Exception ex) {
                     ex.printStackTrace();
                 }
                 System.out.println("You clicked the button");
@@ -54,18 +58,22 @@ public class TestGUI extends JFrame{
 
         pack();
     }
-
+/*
     public void createCohorts() throws Exception{
-        coordinator.newCohort("jdbc:mysql://158.38.185.191:8889/Bil", "db", "db", "BilDB");
-        coordinator.newCohort("jdbc:mysql://158.38.185.191:8889/Fly", "db", "db", "FlyDB");
-    }
+        coordinator.newCohort(Config.CAR_DB_ADRESS, Config.CAR_DB_USER, Config.CAR_DB_PASS, "BilDB");
+        coordinator.newCohort(Config.FLIGHT_DB_ADRESS, Config.FLIGHT_DB_USER, Config.CAR_DB_PASS, "FlyDB");
+    }*/
 
-    public static void main(String[] args) throws Exception{
-        Coordinator coordinatorImpl = (Coordinator) Naming.lookup("rmi://158.38.185.191:2020/coordinatorImpl");
-        System.out.println(coordinatorImpl);
-        TestGUI gui = new TestGUI(coordinatorImpl);
-        gui.setVisible(true);
-        System.out.println("done");
+    public static void main(String[] args){
+        try {
+            Coordinator coordinatorImpl = (Coordinator) Naming.lookup(Config.COORD_ADRESS);
+            System.out.println(coordinatorImpl);
+            TestGUI gui = new TestGUI(coordinatorImpl);
+            gui.setVisible(true);
+            System.out.println("done");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 }
 

@@ -3,6 +3,7 @@ package Coordinator;
 import Cohort.Cohort;
 import Transaction.SubTransaction;
 
+import java.rmi.RemoteException;
 import java.util.*;
 
 class VoteThread extends Thread{
@@ -20,7 +21,15 @@ class VoteThread extends Thread{
     }
 
     public void run(){
-        System.out.println(cohort.getDb_name());
-        votes.add(cohort.voteRequest(id, st.getQuery()));
+        try {
+            System.out.println(cohort.getDb_name());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        try {
+            votes.add(cohort.voteRequest(id, st.getQuery()));
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 }

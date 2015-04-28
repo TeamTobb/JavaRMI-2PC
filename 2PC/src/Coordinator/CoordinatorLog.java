@@ -1,4 +1,5 @@
 package Coordinator;
+import Misc.CoordinatorStatus;
 import Transaction.Transaction;
 
 import java.io.Serializable;
@@ -8,7 +9,6 @@ import java.io.Serializable;
  * Created by Jorgen on 28/04/15.
  */
 public class CoordinatorLog implements Serializable {
-    public enum CoordinatorStatus{INIT, WAIT, ABORT, COMMIT, FINISHED}
     private CoordinatorStatus status;
     private long id;
     private Transaction transaction;
@@ -16,6 +16,10 @@ public class CoordinatorLog implements Serializable {
     public CoordinatorLog(long id, CoordinatorStatus status) {
         this.id = id;
         this.status = status;
+    }
+
+    public CoordinatorLog(){
+
     }
 
     public CoordinatorLog(Transaction transaction){

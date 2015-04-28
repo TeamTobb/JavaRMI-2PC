@@ -11,6 +11,9 @@ public class SubTransaction implements Serializable {
         this.query=query;
     }
 
+    public SubTransaction(){
+    }
+
     public String getDb_name() {
         return db_name;
     }
@@ -26,4 +29,5 @@ public class SubTransaction implements Serializable {
     public void setQuery(String query) {
         this.query = query;
     }
+
 }

@@ -1,5 +1,7 @@
 package Cohort;
 
+import Misc.CohortStatus;
+
 import java.io.Serializable;
 
 /**
@@ -7,13 +9,16 @@ import java.io.Serializable;
  */
 public class CohortLog implements Serializable {
     private long id;
-    public enum CohortStatus{INIT, READY, ABORT, COMMIT, FINISHED};
     private CohortStatus status;
 
     public CohortLog(long id, CohortStatus status) {
         this.id = id;
         this.status = status;
     }
+
+    public CohortLog(){
+    }
+
 
     public String toString(){
         return this.id + this.status.toString();
