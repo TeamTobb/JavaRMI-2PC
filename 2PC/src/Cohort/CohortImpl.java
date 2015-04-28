@@ -18,7 +18,7 @@ public class CohortImpl implements Cohort{
         this.dbname = name;
         this.logger = new CohortLogger(dbname);
         try{
-            this.coord = (Coordinator)Naming.lookup("rmi://localhost:2020/coordinatorImpl");
+            this.coord = (Coordinator)Naming.lookup("rmi://158.38.185.191:2020/coordinatorImpl");
             this.con = DriverManager.getConnection(cordUrl, user, pass);
             con.setAutoCommit(false);
         }catch (Exception e){
@@ -76,5 +76,9 @@ public class CohortImpl implements Cohort{
             e.printStackTrace();
             return false;
         }
+    }
+
+    public void recovery(){
+
     }
 }

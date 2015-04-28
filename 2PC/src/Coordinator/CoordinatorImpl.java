@@ -24,8 +24,8 @@ public class CoordinatorImpl extends UnicastRemoteObject implements Coordinator 
     }
 
     public CoordinatorImpl() throws RemoteException {
+//        new CoordinatorRecovery().recover(this);
     }
-
 
 	public void voteRequest(Transaction transaction)throws RemoteException {
         //log requests to data log.write(requests.toJSON());
@@ -43,7 +43,8 @@ public class CoordinatorImpl extends UnicastRemoteObject implements Coordinator 
         for (Thread t : cohortThreads) {
             try {
                 // if timeout -> rollback()
-                t.join(5000);
+                //really fast because cohort and DB on same machine
+                t.join(50);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -65,13 +66,13 @@ public class CoordinatorImpl extends UnicastRemoteObject implements Coordinator 
     }
 
     public void rollback()throws RemoteException {
-
         for(Cohort c: cohorts){
             c.rollback();
         }
     }
 
-    public boolean transaction(ArrayList<SubTransaction> requests)throws RemoteException {
+    // synchronized - only 1 transaction simultaneously
+    public synchronized boolean transaction(ArrayList<SubTransaction> requests)throws RemoteException {
         Transaction transaction = new Transaction(requests);
         logger.log(new CoordinatorLog(transaction));
         voteRequest(transaction);
@@ -80,7 +81,6 @@ public class CoordinatorImpl extends UnicastRemoteObject implements Coordinator 
             rollback();
             return false;
         }
-
         logger.log(new CoordinatorLog(transaction.getTransID(), CoordinatorLog.CoordinatorStatus.COMMIT));
         commit(transaction.getTransID());
         return true;

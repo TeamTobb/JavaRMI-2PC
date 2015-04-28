@@ -10,7 +10,7 @@ import java.rmi.registry.LocateRegistry;
 public class CoordinatorHost extends JFrame{
     private JTextArea textArea = new JTextArea(15, 30);
     private TextAreaOutputStream taOutputStream = new TextAreaOutputStream(
-            textArea, "Test");
+            textArea, "hei");
 
     public CoordinatorHost(){
         super();

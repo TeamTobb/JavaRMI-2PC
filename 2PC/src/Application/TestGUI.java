@@ -27,13 +27,16 @@ public class TestGUI extends JFrame{
         but1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
                 try {
-                    SubTransaction trans1 = new SubTransaction("BilDB", "INSERT INTO biler VALUES(DEFAULT,'brafarg')");
-                    SubTransaction trans2 = new SubTransaction("FlyDB", "INSERT INTO biletter VALUES(DEFAULT,'passasjer')");
-                    ArrayList<SubTransaction> test = new ArrayList<>();
-                    test.add(trans1);
-                    test.add(trans2);
+                    for(int i = 0; i<100; i++) {
+                        SubTransaction trans1 = new SubTransaction("BilDB", "INSERT INTO biler VALUES(DEFAULT,'brafarg')");
+                        SubTransaction trans2 = new SubTransaction("FlyDB", "INSERT INTO biletter VALUES(DEFAULT,'passasjer')");
+                        ArrayList<SubTransaction> test = new ArrayList<>();
+                        test.add(trans1);
+                        test.add(trans2);
 
-                    boolean transaction = coordinator.transaction(test);
+                        boolean transaction = coordinator.transaction(test);
+//                        Thread.sleep(100);
+                    }
                 }catch(Exception ex){
                     ex.printStackTrace();
                 }
@@ -58,7 +61,7 @@ public class TestGUI extends JFrame{
     }
 
     public static void main(String[] args) throws Exception{
-        Coordinator coordinatorImpl = (Coordinator) Naming.lookup("rmi://localhost:2020/coordinatorImpl");
+        Coordinator coordinatorImpl = (Coordinator) Naming.lookup("rmi://158.38.185.191:2020/coordinatorImpl");
         System.out.println(coordinatorImpl);
         TestGUI gui = new TestGUI(coordinatorImpl);
         gui.setVisible(true);

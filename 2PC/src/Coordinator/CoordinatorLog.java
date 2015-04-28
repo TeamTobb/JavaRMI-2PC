@@ -14,6 +14,7 @@ public class CoordinatorLog implements Serializable {
     private Transaction transaction;
 
     public CoordinatorLog(long id, CoordinatorStatus status) {
+        this.id = id;
         this.status = status;
     }
 
