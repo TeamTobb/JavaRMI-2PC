@@ -27,8 +27,8 @@ public class TestGUI extends JFrame{
         JButton but1 = new JButton("Hans bestiller pakkereise. Det er nok pakkereiser.");
         but1.addActionListener(e -> {
             try {
-                coordinator.newCohort((Cohort)Naming.lookup("rmi://localhost:2020/CohortImpl1"));
-                coordinator.newCohort((Cohort)Naming.lookup("rmi://localhost:2020/CohortImpl2"));
+                coordinator.newCohort((Cohort)Naming.lookup("rmi://10.0.1.12:2020/CohortImpl1"));
+                coordinator.newCohort((Cohort)Naming.lookup("rmi://10.0.1.7:2020/CohortImpl2"));
                 SubTransaction trans1 = new SubTransaction("BilDB", "INSERT INTO biler VALUES(DEFAULT,'brafarg')");
                 SubTransaction trans2 = new SubTransaction("FlyDB", "INSERT INTO biletter VALUES(DEFAULT,'passasjer')");
                 ArrayList<SubTransaction> sts = new ArrayList<>();
@@ -46,8 +46,10 @@ public class TestGUI extends JFrame{
         JButton but2 = new JButton("Geir bestiller pakkereise. Det er nok biler, men ikke nok fly.");
         but2.addActionListener(e -> {
             try {
-                coordinator.newCohort((Cohort)Naming.lookup("rmi://localhost:2020/CohortImpl1"));
-                coordinator.newCohort((Cohort)Naming.lookup("rmi://localhost:2020/CohortImpl2"));
+//                coordinator.newCohort((Cohort)Naming.lookup("rmi://localhost:2020/CohortImpl1"));
+//                coordinator.newCohort((Cohort)Naming.lookup("rmi://localhost:2020/CohortImpl2"));
+                coordinator.newCohort((Cohort)Naming.lookup("rmi://10.0.1.12:2020/CohortImpl1"));
+                coordinator.newCohort((Cohort)Naming.lookup("rmi://10.0.1.7:2020/CohortImpl2"));
                 SubTransaction trans1 = new SubTransaction("BilDB", "INSERT INTO biler VALUES(DEFAULT,'Fin Farge')");
                 //Changed ".. INTO biletter" to "... INTO baasdiletter", to manually force an error.
                 SubTransaction trans2 = new SubTransaction("FlyDB", "INSERT INTO baasdiletter VALUES(DEFAULT,'passasjer')");

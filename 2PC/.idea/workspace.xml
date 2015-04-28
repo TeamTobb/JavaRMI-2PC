@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="2PC:jar" />
+    </artifacts-to-build>
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="3c858030-1511-4416-8a19-7414aec742ca" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BilDB.json" afterPath="$PROJECT_DIR$/BilDB.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/CohortHost.java" afterPath="$PROJECT_DIR$/src/Application/CohortHost.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Cohort/CohortImpl.java" afterPath="$PROJECT_DIR$/src/Cohort/CohortImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/CoordinatorHost.java" afterPath="$PROJECT_DIR$/src/Application/CoordinatorHost.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Coordinator/CoordinatorImpl.java" afterPath="$PROJECT_DIR$/src/Coordinator/CoordinatorImpl.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/artifacts/2PC_jar.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Misc/Config.java" afterPath="$PROJECT_DIR$/src/Misc/Config.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Coordinatorlog.json" afterPath="$PROJECT_DIR$/Coordinatorlog.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/FlyDB.json" afterPath="$PROJECT_DIR$/FlyDB.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/TestGUI.java" afterPath="$PROJECT_DIR$/src/Application/TestGUI.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Coordinator/VoteThread.java" afterPath="$PROJECT_DIR$/src/Coordinator/VoteThread.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="2PC.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -33,11 +35,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="CohortHost.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Application/CohortHost.java">
+      <file leaf-file-name="CohortImpl.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Cohort/CohortImpl.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="23" column="46" selection-start-line="23" selection-start-column="46" selection-end-line="23" selection-end-column="46" />
+              <caret line="23" column="71" selection-start-line="23" selection-start-column="59" selection-end-line="23" selection-end-column="71" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -45,14 +47,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CoordinatorImpl.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Coordinator/CoordinatorImpl.java">
+      <file leaf-file-name="Config.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Misc/Config.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.1210107">
-              <caret line="129" column="25" selection-start-line="129" selection-start-column="25" selection-end-line="129" selection-end-column="25" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="0.31914893">
+              <caret line="16" column="51" selection-start-line="16" selection-start-column="51" selection-end-line="16" selection-end-column="51" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -93,7 +93,6 @@
         <option value="$PROJECT_DIR$/src/CoordinatorImpl.java" />
         <option value="$PROJECT_DIR$/src/Misc/CohortStatus.java" />
         <option value="$PROJECT_DIR$/src/Misc/CoordinatorStatus.java" />
-        <option value="$PROJECT_DIR$/src/Misc/Config.java" />
         <option value="$PROJECT_DIR$/src/Cohort/Cohort.java" />
         <option value="$PROJECT_DIR$/src/Cohort/CohortPingThread.java" />
         <option value="$PROJECT_DIR$/src/Coordinator/CoordinatorPingThread.java" />
@@ -108,10 +107,11 @@
         <option value="$PROJECT_DIR$/src/Cohort/CohortRecovery.java" />
         <option value="$PROJECT_DIR$/src/Cohort/CohortImpl.java" />
         <option value="$PROJECT_DIR$/src/Coordinator/VoteThread.java" />
-        <option value="$PROJECT_DIR$/src/Application/CohortHost.java" />
-        <option value="$PROJECT_DIR$/src/Application/TestGUI.java" />
         <option value="$PROJECT_DIR$/src/Application/CoordinatorHost.java" />
         <option value="$PROJECT_DIR$/src/Coordinator/CoordinatorImpl.java" />
+        <option value="$PROJECT_DIR$/src/Application/CohortHost.java" />
+        <option value="$PROJECT_DIR$/src/Application/TestGUI.java" />
+        <option value="$PROJECT_DIR$/src/Misc/Config.java" />
       </list>
     </option>
   </component>
@@ -320,7 +320,7 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/jackson-annotations-2.5.3.jar!/" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
@@ -677,9 +677,9 @@
     <recent_temporary>
       <list size="4">
         <item index="0" class="java.lang.String" itemvalue="Application.TestGUI" />
-        <item index="1" class="java.lang.String" itemvalue="Application.CohortHostBil" />
-        <item index="2" class="java.lang.String" itemvalue="Application.CohortHostFly" />
-        <item index="3" class="java.lang.String" itemvalue="Application.CoordinatorHost" />
+        <item index="1" class="java.lang.String" itemvalue="Application.CoordinatorHost" />
+        <item index="2" class="java.lang.String" itemvalue="Application.CohortHostBil" />
+        <item index="3" class="java.lang.String" itemvalue="Application.CohortHostFly" />
       </list>
     </recent_temporary>
   </component>
@@ -698,12 +698,12 @@
       <workItem from="1430170786520" duration="153000" />
       <workItem from="1430171118388" duration="189000" />
       <workItem from="1430202786223" duration="9873000" />
-      <workItem from="1430215374158" duration="33332000" />
+      <workItem from="1430215374158" duration="34530000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="55132000" />
+    <option name="totallyTimeSpent" value="56330000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1920" height="1053" extended-state="6" />
@@ -1034,14 +1034,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Misc/Config.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.12552302">
-          <caret line="8" column="27" selection-start-line="8" selection-start-column="27" selection-end-line="8" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Transaction/Transaction.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.18828452">
@@ -1169,10 +1161,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Cohort/CohortImpl.java">
+    <entry file="file://$PROJECT_DIR$/src/Coordinator/CoordinatorImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.14228724">
-          <caret line="84" column="32" selection-start-line="84" selection-start-column="32" selection-end-line="84" selection-end-column="32" />
+        <state vertical-scroll-proportion="0.11297071">
+          <caret line="80" column="0" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1181,8 +1173,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Application/TestGUI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9800532">
-          <caret line="54" column="32" selection-start-line="54" selection-start-column="32" selection-end-line="54" selection-end-column="32" />
+        <state vertical-scroll-proportion="0.122340426">
+          <caret line="30" column="48" selection-start-line="30" selection-start-column="48" selection-end-line="30" selection-end-column="48" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1191,21 +1183,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Application/CohortHost.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="23" column="46" selection-start-line="23" selection-start-column="46" selection-end-line="23" selection-end-column="46" />
+        <state vertical-scroll-proportion="0.5212766">
+          <caret line="45" column="12" selection-start-line="45" selection-start-column="12" selection-end-line="45" selection-end-column="12" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Coordinator/CoordinatorImpl.java">
+    <entry file="file://$PROJECT_DIR$/src/Cohort/CohortImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.1210107">
-          <caret line="129" column="25" selection-start-line="129" selection-start-column="25" selection-end-line="129" selection-end-column="25" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="23" column="71" selection-start-line="23" selection-start-column="59" selection-end-line="23" selection-end-column="71" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Misc/Config.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.31914893">
+          <caret line="16" column="51" selection-start-line="16" selection-start-column="51" selection-end-line="16" selection-end-column="51" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1215,10 +1215,12 @@
       <state key="ArtifactsStructureConfigurable.UI">
         <settings>
           <artifact-editor />
+          <last-edited>2PC:jar</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
                 <option value="0.2" />
+                <option value="0.5" />
               </list>
             </option>
           </splitter-proportions>
