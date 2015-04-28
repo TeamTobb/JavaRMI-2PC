@@ -18,10 +18,11 @@ public class CoordinatorHost extends JFrame{
     private CoordinatorImpl coordinator;
     private JTextArea textArea = new JTextArea(15, 30);
     private TextAreaOutputStream taOutputStream = new TextAreaOutputStream(
-            textArea, "hei");
+            textArea, "Log");
 
     public CoordinatorHost(CoordinatorImpl coordinator){
         super();
+        this.setTitle("Coordinator host");
         this.coordinator = coordinator;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new FlowLayout());
@@ -32,21 +33,14 @@ public class CoordinatorHost extends JFrame{
         JButton recoverButton = new JButton("Recover");
         JButton exitButton = new JButton("Exit");
 
-
-        recoverButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                coordinator.recover();
+        recoverButton.addActionListener(e -> coordinator.recover());
+        exitButton.addActionListener(e -> {
+            try {
+                Naming.unbind(Config.COORD_ADRESS);
+            }catch(Exception ex){
+                ex.printStackTrace();
             }
-        });
-        exitButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    Naming.unbind(Config.COORD_ADRESS);
-                }catch(Exception ex){
-                    ex.printStackTrace();
-                }
-                System.exit(0);
-            }
+            System.exit(0);
         });
         add(recoverButton);
         add(exitButton);

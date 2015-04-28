@@ -1,26 +1,26 @@
 [{
   "status" : "INIT",
-  "id" : 1430253185578,
+  "id" : 1430255530312,
   "transaction" : {
     "subTransactions" : [ {
       "db_name" : "BilDB",
-      "query" : "INSERT INTO biler VALUES(DEFAULT,'brafarg')"
+      "query" : "INSERT INTO biler VALUES(DEFAULT,'Fin Farge')"
     }, {
       "db_name" : "FlyDB",
-      "query" : "INSERT INTO biletter VALUES(DEFAULT,'passasjer')"
+      "query" : "INSERT INTO baasdiletter VALUES(DEFAULT,'passasjer')"
     } ],
-    "transID" : 1430253185578
+    "transID" : 1430255530312
   }
 },{
   "status" : "WAIT",
-  "id" : 1430253185578,
+  "id" : 1430255530312,
   "transaction" : null
 },{
-  "status" : "COMMIT",
-  "id" : 1430253185578,
+  "status" : "ABORT",
+  "id" : 1430255530312,
   "transaction" : null
 },{
   "status" : "FINISHED",
-  "id" : 1430253185578,
+  "id" : 1430255530312,
   "transaction" : null
 }

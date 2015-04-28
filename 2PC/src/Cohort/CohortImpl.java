@@ -31,20 +31,28 @@ public class CohortImpl extends UnicastRemoteObject implements Cohort {
 
     @Override
 	public boolean voteRequest(long id, String sql) throws RemoteException{
+        System.out.println("Vote request ");
         logger.log(new CohortLog(id, CohortStatus.INIT));
+        System.out.println("Logged status INIT: " + id);
         try {
-//            if(sql.equals("INSERT INTO biletter VALUES(DEFAULT,'passasjer')")) return false;
             Statement st = this.con.createStatement();
+            System.out.println("Created statement");
             int res = st.executeUpdate(sql);
             if(res==1){
                 logger.log(new CohortLog(id, CohortStatus.READY));
+                System.out.println("ExecuteUpdate successful. ");
+                System.out.println("Logged status READY" + id);
                 return true;
             }else{
+                System.out.println("ExecuteUpdate failure");
+                System.out.println("Logged status ABORT: " + id);
                 logger.log(new CohortLog(id, CohortStatus.ABORT));
                 return false;
             }
         }catch(Exception e){
             e.printStackTrace();
+            System.out.println("ExecuteUpdate failure");
+            System.out.println("Logged status ABORT: " + id);
             logger.log(new CohortLog(id, CohortStatus.ABORT));
             return false;
         }
@@ -64,28 +72,32 @@ public class CohortImpl extends UnicastRemoteObject implements Cohort {
     }
 
 	public boolean commit(long id) throws RemoteException{
+        System.out.println("Logging status COMMIT: " + id);
         logger.log(new CohortLog(id, CohortStatus.COMMIT));
         try {
             con.commit();
+            System.out.println("Commit successful.");
             logger.log(new CohortLog(id, CohortStatus.FINISHED));
-            System.out.println("Commit. DBname: " + this.dbname);
+            System.out.println("Logging status FINISHED: " + id);
             return true;
         } catch (SQLException e) {
-            //did not crash, but no commit. WHAT TO DO
+            System.out.println("Commit failure. ");
             e.printStackTrace();
-            //log nothing?
             return false;
         }
     }
 
     public boolean rollback(long id) throws RemoteException {
+        System.out.println("Logging status ABORT: " + id);
         logger.log(new CohortLog(id, CohortStatus.ABORT));
         try {
             con.rollback();
-            System.out.println("Rollback. DBname: " + this.dbname);
+            System.out.println("Rollback successful.");
             logger.log(new CohortLog(id, CohortStatus.FINISHED));
+            System.out.println("Logging status FINISHED: " + id);
             return true;
         } catch (Exception e) {
+            System.out.println("Rollback failure");
             e.printStackTrace();
             return false;
         }
@@ -96,8 +108,10 @@ public class CohortImpl extends UnicastRemoteObject implements Cohort {
             Statement st = this.con.createStatement();
             st.executeUpdate(sql);
             con.commit();
-            System.out.println("ExecuteAndCommit. DBname: " + this.dbname);
+            System.out.println("ExecuteAndCommit successful");
+
         }catch(Exception e){
+            System.out.println("ExecuteAndCommit failure");
             e.printStackTrace();
         }
     }

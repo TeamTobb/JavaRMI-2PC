@@ -22,11 +22,6 @@ class VoteThread extends Thread{
 
     public void run(){
         try {
-            System.out.println(cohort.getDb_name());
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-        try {
             votes.add(cohort.voteRequest(id, st.getQuery()));
         } catch (RemoteException e) {
             e.printStackTrace();

@@ -1,10 +1,6 @@
 package Application;
 
 import Cohort.CohortImpl;
-import Cohort.Cohort;
-import Coordinator.CoordinatorImpl;
-import Misc.Config;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,14 +9,10 @@ import java.io.PrintStream;
 import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
 
-
-
-
 public class CohortHost extends JFrame {
     private CohortImpl cohort;
     private JTextArea textArea = new JTextArea(15, 30);
-    private TextAreaOutputStream taOutputStream = new TextAreaOutputStream(
-            textArea, "Log");
+    private TextAreaOutputStream taOutputStream = new TextAreaOutputStream(textArea, "Log");
     private String objectname;
 
     public CohortHost(CohortImpl cohort, String objectname){
@@ -36,21 +28,14 @@ public class CohortHost extends JFrame {
         JButton recoverButton = new JButton("Recover");
         JButton exitButton = new JButton("Exit");
 
-
-        recoverButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                cohort.recover();
+        recoverButton.addActionListener(e -> cohort.recover());
+        exitButton.addActionListener(e -> {
+            try {
+                Naming.unbind(objectname);
+            }catch(Exception ex){
+                ex.printStackTrace();
             }
-        });
-        exitButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    Naming.unbind(objectname);
-                }catch(Exception ex){
-                    ex.printStackTrace();
-                }
-                System.exit(0);
-            }
+            System.exit(0);
         });
         add(recoverButton);
         add(exitButton);
@@ -71,6 +56,7 @@ public class CohortHost extends JFrame {
             System.out.println("RMI-objekt er registrert");
 
             CohortHost gui = new CohortHost(cohortImpl, objectName);
+            gui.setTitle("CohortHOST: " + args[3]);
             gui.setVisible(true);
         }catch(Exception e){
             e.printStackTrace();

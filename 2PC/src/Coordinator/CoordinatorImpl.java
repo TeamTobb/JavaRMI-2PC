@@ -54,15 +54,18 @@ public class CoordinatorImpl extends UnicastRemoteObject implements Coordinator 
 
 	public void voteRequest()throws RemoteException {
         //log requests to data log.write(requests.toJSON());
+        System.out.println("Begin vote requests");
         cohortThreads = new ArrayList<>();
 		votes = Collections.synchronizedList(new ArrayList<>());
-		for(SubTransaction st : transaction.getSubTransactions()) {
+        System.out.println("Creating " + transaction.getSubTransactions().size() + " threads, 1 per SubTrans");
+        for(SubTransaction st : transaction.getSubTransactions()) {
             this.cohortThreads.add(new VoteThread(transaction.getTransID(), votes, getCohort(st.getDb_name()), st));
         }
         for (Thread t : cohortThreads) {
             t.start(); // SEND VOTE REQUEST
         }
-
+        System.out.println("Vote requests are sent");
+        System.out.println("Logging status WAIT");
         logger.log(new CoordinatorLog(transaction.getTransID(), CoordinatorStatus.WAIT));
 
         for (Thread t : cohortThreads) {
@@ -73,7 +76,7 @@ public class CoordinatorImpl extends UnicastRemoteObject implements Coordinator 
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } //if crash, wait abit and redo whole shit
+        }
 	}
 
 	public Cohort getCohort(String dbname) throws RemoteException {
@@ -94,7 +97,7 @@ public class CoordinatorImpl extends UnicastRemoteObject implements Coordinator 
         ArrayList<Boolean> acks = new ArrayList<>();
         for(Cohort c: cohorts){
             if(isCohortInTransaction(c)){
-                acks.add(c.commit(id)); // this can timeout - threads.
+                acks.add(c.commit(id)); // this can timeout - threads?
             }
         }
         if(acks.size() == transaction.getSubTransactions().size() && !acks.contains(false)){
@@ -109,24 +112,28 @@ public class CoordinatorImpl extends UnicastRemoteObject implements Coordinator 
         logger.log(new CoordinatorLog(transaction.getTransID(), CoordinatorStatus.FINISHED));
     }
 
-    /*public void rollback(ArrayList<SubTransaction> sts){
-        for(SubTransaction st : sts){
-            getCohort(st.getDb_name()).rollback();
-        }
-    }*/
-
     // synchronized - only 1 transaction simultaneously
     public synchronized boolean transaction(ArrayList<SubTransaction> requests) throws RemoteException {
+        System.out.println("Begin transaction");
         this.transaction = new Transaction(requests);
         logger.log(new CoordinatorLog(transaction)); // INIT
+        System.out.println("Logging status INIT");
         voteRequest();
+        System.out.println("Checking if all votes are positive, and number of votes are correct.");
         if(votes.contains(false) || votes.size()<requests.size()){
+            System.out.println("Too few votes / at least 1 false vote");
+            System.out.println("Logging status ABORT");
             logger.log(new CoordinatorLog(transaction.getTransID(), CoordinatorStatus.ABORT));
+            System.out.println("Starting rollback");
             rollback();
+            System.out.println("Rollback successful");
             return false;
         }
+        System.out.println("Correct number of votes && only positive votes");
+        System.out.println("Logging status COMMIT");
         logger.log(new CoordinatorLog(transaction.getTransID(), CoordinatorStatus.COMMIT));
         commit(transaction.getTransID());
+        System.out.println("Commit successful");
         return true;
     }
 
