@@ -19,8 +19,8 @@ public class CoordinatorRecovery {
         switch(lastItem.getStatus()){
             case INIT:
             case WAIT:
-                initCase();
                 System.out.println("Recovering from INIT/WAIT");
+                initCase();
             break;
 
             case ABORT:
@@ -63,10 +63,7 @@ public class CoordinatorRecovery {
         List<CoordinatorLog> coordLogItems = coordinator.getLogger().getLogItems();
         for(CoordinatorLog l : coordLogItems) {
             if (l.getStatus() == CoordinatorStatus.INIT) {
-               /* for (SubTransaction s : l.getTransaction().getSubTransactions()) {
-                    sts.add(s);
-                }*/
-                sts.addAll(l.getTransaction().getSubTransactions().stream().collect(Collectors.toList()));
+                sts=l.getTransaction().getSubTransactions();
             }
         }
         coordinator.setTransaction(new Transaction(sts));

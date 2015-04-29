@@ -3,10 +3,10 @@ package Coordinator;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -41,8 +41,22 @@ public class CoordinatorLogger implements Serializable{
         }
     }
 
+    public List<CoordinatorLog> getLogItems(Long id) {
+        ArrayList<CoordinatorLog>logItems = null;
+
+        try {
+            byte[] encoded = Files.readAllBytes(Paths.get("errorlogs/" + id + ".json"));
+            String jsonAsString = new String(encoded, Charset.defaultCharset());
+            jsonAsString+="]";
+            Collection<CoordinatorLog> items = new ObjectMapper().readValue(jsonAsString, new TypeReference<Collection<CoordinatorLog>>() { });
+            logItems=new ArrayList<>(items);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return logItems;
+    }
+
     public List<CoordinatorLog> getLogItems() {
-        ObjectMapper mapper = new ObjectMapper();
         ArrayList<CoordinatorLog>logItems = null;
 
         try {
@@ -55,6 +69,17 @@ public class CoordinatorLogger implements Serializable{
             e.printStackTrace();
         }
         return logItems;
+    }
+
+    public void errorLog(Long id){
+        Path from = Paths.get("Coordinatorlog.json");
+        Path to = Paths.get("errorlogs/" + id + ".json");
+
+        try {
+            Files.copy(from, to);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getFileName() {

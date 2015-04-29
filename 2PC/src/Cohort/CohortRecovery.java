@@ -1,7 +1,5 @@
 package Cohort;
-import Coordinator.Coordinator;
 import Coordinator.CoordinatorLog;
-import Coordinator.CoordinatorLogger;
 import Misc.CoordinatorStatus;
 import Transaction.SubTransaction;
 
@@ -38,27 +36,18 @@ public class CohortRecovery {
             break;
 
             case FINISHED:
-                System.out.println("Recovering from FINISHE");
+                System.out.println("Recovering from FINISHED");
                 //nothing to see here...
             break;
 
             default:
-                //remove this showMessageDialog
-                showMessageDialog(null, "CohortRecovery.recover: Default.");
                 cohort.rollback(id);
             break;
         }
     }
 
     private void readyCase(Cohort cohort) throws Exception{
-        List<CoordinatorLog>  coordLogItems = cohort.getCoord().getLogItems(); //getLogger().getLogItems();
-//        Coordinator co = cohort.getCoord();
-//        System.out.println("co: " + co.toString());
-//        CoordinatorLogger logger = co.getLogger();
-//        System.out.println("CordLogger: " + logger.toString());
-//        List<CoordinatorLog>  coordLogItems  = logger.getLogItems();
-//
-
+        List<CoordinatorLog>  coordLogItems = cohort.getCoord().getLogItems(this.id);
         for (CoordinatorLog l : coordLogItems) {
             if(l.getStatus() == CoordinatorStatus.ABORT){
                 cohort.rollback(id);
@@ -80,7 +69,7 @@ public class CohortRecovery {
     }
 
     private void commitCase(Cohort cohort) throws Exception{
-        List<CoordinatorLog> coordLogItems = cohort.getCoord().getLogItems();
+        List<CoordinatorLog> coordLogItems = cohort.getCoord().getLogItems(this.id);
         for(CoordinatorLog l : coordLogItems){
             if(l.getStatus() == CoordinatorStatus.INIT){
                 for (SubTransaction s : l.getTransaction().getSubTransactions()){

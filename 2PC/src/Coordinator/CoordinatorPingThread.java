@@ -15,7 +15,7 @@ public class CoordinatorPingThread extends Thread {
                 try {
                     cohorts.get(i).getDb_name();
                 } catch (Exception e) {
-                    System.out.println("No answer from cohort pingthread");
+                    System.out.println("PingThread: A cohort didn't answer in time. Cohort removed.");
                     cohorts.remove(i);
                 }
             }

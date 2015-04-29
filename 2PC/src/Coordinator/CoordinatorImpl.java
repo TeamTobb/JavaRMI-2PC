@@ -1,7 +1,6 @@
 package Coordinator;
 
 import Cohort.Cohort;
-import Cohort.CohortImpl;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -24,19 +23,20 @@ public class CoordinatorImpl extends UnicastRemoteObject implements Coordinator 
     private Transaction transaction;
     private CoordinatorPingThread pingThread = new CoordinatorPingThread(cohorts);
 
-	public boolean newCohort(String databaseURL, String user, String pass, String name)throws RemoteException {
+	/*public boolean newCohort(String databaseURL, String user, String pass, String name, String coordinatorAdress)throws RemoteException {
         for(Cohort c : cohorts){
             if(c.getDb_name().equals(name)) return false;
         }
-        this.cohorts.add(new CohortImpl(databaseURL, user, pass, name));
+        this.cohorts.add(new CohortImpl(databaseURL, user, pass, name, coordinatorAdress));
         return true;
-    }
+    }*/
 
     public boolean newCohort(Cohort cohort) throws RemoteException{
         for(Cohort c : cohorts) {
             if (c.getDb_name().equals(cohort.getDb_name())) return false;
         }
         this.cohorts.add(cohort);
+        System.out.println("New cohort added: " + cohort.getDb_name());
         return true;
     }
 
@@ -61,9 +61,9 @@ public class CoordinatorImpl extends UnicastRemoteObject implements Coordinator 
         for(SubTransaction st : transaction.getSubTransactions()) {
             this.cohortThreads.add(new VoteThread(transaction.getTransID(), votes, getCohort(st.getDb_name()), st));
         }
-        for (Thread t : cohortThreads) {
-            t.start(); // SEND VOTE REQUEST
-        }
+
+        cohortThreads.forEach(Thread::start); // SEND VOTE REQUESTS
+
         System.out.println("Vote requests are sent");
         System.out.println("Logging status WAIT");
         logger.log(new CoordinatorLog(transaction.getTransID(), CoordinatorStatus.WAIT));
@@ -94,15 +94,24 @@ public class CoordinatorImpl extends UnicastRemoteObject implements Coordinator 
     }
 
     public void commit(long id) throws RemoteException {
+        ArrayList<String> failureList = new ArrayList<>();
         ArrayList<Boolean> acks = new ArrayList<>();
         for(Cohort c: cohorts){
             if(isCohortInTransaction(c)){
-                acks.add(c.commit(id)); // this can timeout - threads?
+                // this can timeout - threads?
+                if(c.commit(id)) acks.add(true);
+                else failureList.add(c.getDb_name());
             }
         }
         if(acks.size() == transaction.getSubTransactions().size() && !acks.contains(false)){
+            System.out.println("Commit successful");
             logger.log(new CoordinatorLog(transaction.getTransID(), CoordinatorStatus.FINISHED));
-        }//else - requires administrative attention.
+        }else{
+            System.out.println("Commit failure.");
+            failureList.forEach(s -> System.out.println("Run recovery on: " + s));
+            logger.errorLog(id);
+            logger.log(new CoordinatorLog(transaction.getTransID(), CoordinatorStatus.FINISHED));
+        }
     }
 
     public void rollback() throws RemoteException {
@@ -133,7 +142,7 @@ public class CoordinatorImpl extends UnicastRemoteObject implements Coordinator 
         System.out.println("Logging status COMMIT");
         logger.log(new CoordinatorLog(transaction.getTransID(), CoordinatorStatus.COMMIT));
         commit(transaction.getTransID());
-        System.out.println("Commit successful");
+        System.out.println("Logging status FINISHED");
         return true;
     }
 
@@ -149,7 +158,7 @@ public class CoordinatorImpl extends UnicastRemoteObject implements Coordinator 
         return transaction;
     }
 
-    public List<CoordinatorLog> getLogItems() throws RemoteException{
-        return logger.getLogItems();
+    public List<CoordinatorLog> getLogItems(long id) throws RemoteException{
+        return logger.getLogItems(id);
     }
 }

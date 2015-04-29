@@ -1,33 +1,27 @@
 package Application;
 
-import Cohort.Cohort;
 import Coordinator.CoordinatorImpl;
-import Transaction.SubTransaction;
-import Misc.Config;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.PrintStream;
 import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
-import java.util.ArrayList;
 
 public class CoordinatorHost extends JFrame{
     private CoordinatorImpl coordinator;
     private JTextArea textArea = new JTextArea(15, 30);
-    private TextAreaOutputStream taOutputStream = new TextAreaOutputStream(
-            textArea, "Log");
+    private TextAreaOutputStream taOutputStream = new TextAreaOutputStream(textArea, "Log");
+    private String objectName;
 
-    public CoordinatorHost(CoordinatorImpl coordinator){
+    public CoordinatorHost(CoordinatorImpl coordinator, String objectName){
         super();
+        this.objectName = objectName;
         this.setTitle("Coordinator host");
         this.coordinator = coordinator;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new FlowLayout());
         add(new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER));
+                JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS));
         System.setOut(new PrintStream(taOutputStream));
 
         JButton recoverButton = new JButton("Recover");
@@ -36,7 +30,7 @@ public class CoordinatorHost extends JFrame{
         recoverButton.addActionListener(e -> coordinator.recover());
         exitButton.addActionListener(e -> {
             try {
-                Naming.unbind(Config.COORD_ADRESS);
+                Naming.unbind(objectName);
             }catch(Exception ex){
                 ex.printStackTrace();
             }
@@ -49,11 +43,12 @@ public class CoordinatorHost extends JFrame{
 
     public static void main(String[] args){
         try{
-            LocateRegistry.createRegistry(2020);
+            String objectName = "rmi://localhost:" + args[0] + "/coordinatorImpl";
+            LocateRegistry.createRegistry(Integer.parseInt(args[0]));
             CoordinatorImpl coordinatorImpl = new CoordinatorImpl();
-            CoordinatorHost gui = new CoordinatorHost(coordinatorImpl);
+            CoordinatorHost gui = new CoordinatorHost(coordinatorImpl, objectName);
             gui.setVisible(true);
-            String objectName = Config.COORD_ADRESS;
+
             Naming.rebind(objectName, coordinatorImpl);
             System.out.println("RMI-objekt er registrert");
         } catch(Exception e){

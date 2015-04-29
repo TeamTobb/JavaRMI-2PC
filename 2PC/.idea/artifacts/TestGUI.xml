@@ -1,11 +1,14 @@
 <component name="ArtifactManager">
-  <artifact type="jar" name="2PC:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/2PC_jar</output-path>
+  <artifact type="jar" name="TestGUI">
+    <output-path>$PROJECT_DIR$/out/artifacts/TestGUI</output-path>
     <root id="archive" name="2PC.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/Manifests/TestGUI/META-INF/MANIFEST.MF" />
+      </element>
       <element id="module-output" name="2PC" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/mysql-connector-java-5.1.35-bin.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/jackson-core-2.5.1.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/jackson-databind-2.5.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/mysql-connector-java-5.1.35-bin.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/jackson-annotations-2.5.3.jar" path-in-jar="/" />
     </root>
   </artifact>
