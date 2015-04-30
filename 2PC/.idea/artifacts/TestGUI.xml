@@ -1,7 +1,7 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="TestGUI">
     <output-path>$PROJECT_DIR$/out/artifacts/TestGUI</output-path>
-    <root id="archive" name="2PC.jar">
+    <root id="archive" name="TestGUI.jar">
       <element id="directory" name="META-INF">
         <element id="file-copy" path="$PROJECT_DIR$/Manifests/TestGUI/META-INF/MANIFEST.MF" />
       </element>

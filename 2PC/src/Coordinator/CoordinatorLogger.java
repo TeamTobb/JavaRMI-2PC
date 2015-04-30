@@ -12,15 +12,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class CoordinatorLogger implements Serializable{
+public class CoordinatorLogger{
     private String fileName;
     private FileWriter fileWriter;
 
     public CoordinatorLogger(String dbName) {
         this.fileName = dbName + ".json";
-    }
-
-    public CoordinatorLogger(){
     }
 
     public void log(CoordinatorLog logItem) {
@@ -75,7 +72,6 @@ public class CoordinatorLogger implements Serializable{
         try{
             Files.createDirectory(Paths.get("errorlogs"));
         } catch(IOException e){
-            e.printStackTrace();
         }
         Path from = Paths.get("Coordinatorlog.json");
         Path to = Paths.get("errorlogs/" + id + ".json");
@@ -84,21 +80,5 @@ public class CoordinatorLogger implements Serializable{
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
-    public FileWriter getFileWriter() {
-        return fileWriter;
-    }
-
-    public void setFileWriter(FileWriter fileWriter) {
-        this.fileWriter = fileWriter;
     }
 }

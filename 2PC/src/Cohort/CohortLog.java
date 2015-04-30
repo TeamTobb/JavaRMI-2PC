@@ -1,12 +1,8 @@
 package Cohort;
 
 import Misc.CohortStatus;
-
 import java.io.Serializable;
 
-/**
- * Created by Jorgen on 28/04/15.
- */
 public class CohortLog implements Serializable {
     private long id;
     private CohortStatus status;

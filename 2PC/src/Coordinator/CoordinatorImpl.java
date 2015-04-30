@@ -16,7 +16,6 @@ import Transaction.SubTransaction;
 
 public class CoordinatorImpl extends UnicastRemoteObject implements Coordinator {
 	private List<Cohort> cohorts = Collections.synchronizedList(new ArrayList<>());
-    private Date date;
 	List<Boolean> votes = Collections.synchronizedList(new ArrayList<>());
     private ArrayList<Thread> cohortThreads = new ArrayList<>();
     private CoordinatorLogger logger = new CoordinatorLogger("Coordinatorlog");

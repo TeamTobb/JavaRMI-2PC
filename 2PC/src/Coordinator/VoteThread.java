@@ -6,7 +6,6 @@ import java.rmi.RemoteException;
 import java.util.*;
 
 class VoteThread extends Thread{
-
     private List<Boolean> votes;
     private Cohort cohort;
     private SubTransaction st;

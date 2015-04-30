@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Serializable;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -13,9 +12,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class CohortLogger implements Serializable{
+public class CohortLogger{
     private String fileName;
     private FileWriter fileWriter;
+
     public CohortLogger(String dbName) {
         this.fileName = dbName + ".json";
     }
