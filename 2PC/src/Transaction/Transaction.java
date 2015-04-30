@@ -31,5 +31,4 @@ public class Transaction implements Serializable{
     public void setTransID(long transID) {
         this.transID = transID;
     }
-
 }

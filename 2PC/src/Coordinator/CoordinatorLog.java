@@ -1,13 +1,9 @@
 package Coordinator;
+
 import Misc.CoordinatorStatus;
 import Transaction.Transaction;
-
 import java.io.Serializable;
 
-
-/**
- * Created by Jorgen on 28/04/15.
- */
 public class CoordinatorLog implements Serializable {
     private CoordinatorStatus status;
     private long id;
@@ -19,7 +15,6 @@ public class CoordinatorLog implements Serializable {
     }
 
     public CoordinatorLog(){
-
     }
 
     public CoordinatorLog(Transaction transaction){
@@ -43,7 +38,6 @@ public class CoordinatorLog implements Serializable {
     public void setId(long id) {
         this.id = id;
     }
-
 
     public Transaction getTransaction() {
         return transaction;

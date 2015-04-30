@@ -19,7 +19,6 @@ public class CohortLog implements Serializable {
     public CohortLog(){
     }
 
-
     public String toString(){
         return this.id + this.status.toString();
     }

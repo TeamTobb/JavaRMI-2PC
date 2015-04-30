@@ -9,7 +9,7 @@ import java.rmi.registry.LocateRegistry;
 
 public class CoordinatorHost extends JFrame{
     private CoordinatorImpl coordinator;
-    private JTextArea textArea = new JTextArea(15, 30);
+    private JTextArea textArea = new JTextArea(25, 40);
     private TextAreaOutputStream taOutputStream = new TextAreaOutputStream(textArea, "Log");
     private String objectName;
 
@@ -46,11 +46,10 @@ public class CoordinatorHost extends JFrame{
             String objectName = "rmi://localhost:" + args[0] + "/coordinatorImpl";
             LocateRegistry.createRegistry(Integer.parseInt(args[0]));
             CoordinatorImpl coordinatorImpl = new CoordinatorImpl();
-            CoordinatorHost gui = new CoordinatorHost(coordinatorImpl, objectName);
-            gui.setVisible(true);
-
             Naming.rebind(objectName, coordinatorImpl);
             System.out.println("RMI-objekt er registrert");
+            CoordinatorHost gui = new CoordinatorHost(coordinatorImpl, objectName);
+            gui.setVisible(true);
         } catch(Exception e){
             e.printStackTrace();
         }

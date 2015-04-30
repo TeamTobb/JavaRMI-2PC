@@ -23,14 +23,7 @@ public class CoordinatorImpl extends UnicastRemoteObject implements Coordinator 
     private Transaction transaction;
     private CoordinatorPingThread pingThread = new CoordinatorPingThread(cohorts);
 
-	/*public boolean newCohort(String databaseURL, String user, String pass, String name, String coordinatorAdress)throws RemoteException {
-        for(Cohort c : cohorts){
-            if(c.getDb_name().equals(name)) return false;
-        }
-        this.cohorts.add(new CohortImpl(databaseURL, user, pass, name, coordinatorAdress));
-        return true;
-    }*/
-
+    @Override
     public boolean newCohort(Cohort cohort) throws RemoteException{
         for(Cohort c : cohorts) {
             if (c.getDb_name().equals(cohort.getDb_name())) return false;
@@ -53,7 +46,6 @@ public class CoordinatorImpl extends UnicastRemoteObject implements Coordinator 
     }
 
 	public void voteRequest()throws RemoteException {
-        //log requests to data log.write(requests.toJSON());
         System.out.println("Begin vote requests");
         cohortThreads = new ArrayList<>();
 		votes = Collections.synchronizedList(new ArrayList<>());
@@ -70,7 +62,6 @@ public class CoordinatorImpl extends UnicastRemoteObject implements Coordinator 
 
         for (Thread t : cohortThreads) {
             try {
-                // if timeout -> rollback()
                 //Timeout threads after a given time.
                 t.join(Config.THREAD_WAIT_TIME);
             } catch (Exception e) {
@@ -93,6 +84,7 @@ public class CoordinatorImpl extends UnicastRemoteObject implements Coordinator 
         return false;
     }
 
+    @Override
     public void commit(long id) throws RemoteException {
         ArrayList<String> failureList = new ArrayList<>();
         ArrayList<Boolean> acks = new ArrayList<>();
@@ -114,6 +106,7 @@ public class CoordinatorImpl extends UnicastRemoteObject implements Coordinator 
         }
     }
 
+    @Override
     public void rollback() throws RemoteException {
         for(Cohort c: cohorts){
             if(isCohortInTransaction(c)) c.rollback(transaction.getTransID());
@@ -121,6 +114,7 @@ public class CoordinatorImpl extends UnicastRemoteObject implements Coordinator 
         logger.log(new CoordinatorLog(transaction.getTransID(), CoordinatorStatus.FINISHED));
     }
 
+    @Override
     // synchronized - only 1 transaction simultaneously
     public synchronized boolean transaction(ArrayList<SubTransaction> requests) throws RemoteException {
         System.out.println("Begin transaction");
@@ -146,18 +140,22 @@ public class CoordinatorImpl extends UnicastRemoteObject implements Coordinator 
         return true;
     }
 
+    @Override
     public CoordinatorLogger getLogger() throws RemoteException {
         return logger;
     }
 
+    @Override
     public void setTransaction(Transaction transaction) {
         this.transaction = transaction;
     }
 
+    @Override
     public Transaction getTransaction() throws RemoteException {
         return transaction;
     }
 
+    @Override
     public List<CoordinatorLog> getLogItems(long id) throws RemoteException{
         return logger.getLogItems(id);
     }

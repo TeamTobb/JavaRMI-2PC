@@ -72,9 +72,13 @@ public class CoordinatorLogger implements Serializable{
     }
 
     public void errorLog(Long id){
+        try{
+            Files.createDirectory(Paths.get("errorlogs"));
+        } catch(IOException e){
+            e.printStackTrace();
+        }
         Path from = Paths.get("Coordinatorlog.json");
         Path to = Paths.get("errorlogs/" + id + ".json");
-
         try {
             Files.copy(from, to);
         } catch (IOException e) {

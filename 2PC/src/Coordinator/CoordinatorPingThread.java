@@ -1,10 +1,11 @@
 package Coordinator;
-import Cohort.Cohort;
 
+import Cohort.Cohort;
 import java.util.List;
 
 public class CoordinatorPingThread extends Thread {
     private List<Cohort> cohorts;
+
     public CoordinatorPingThread(List<Cohort> cohorts){
         this.cohorts = cohorts;
     }

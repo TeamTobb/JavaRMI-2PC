@@ -2,11 +2,9 @@ package Coordinator;
 
 import Misc.CoordinatorStatus;
 import Transaction.SubTransaction;
-
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import Transaction.Transaction;
 
 public class CoordinatorRecovery {
@@ -39,6 +37,7 @@ public class CoordinatorRecovery {
             break;
         }
     }
+
     private void initCase() throws RemoteException {
         ArrayList<SubTransaction> sts = setTransactions();
         coordinator.rollback();
@@ -69,5 +68,4 @@ public class CoordinatorRecovery {
         coordinator.setTransaction(new Transaction(sts));
         return sts;
     }
-
 }

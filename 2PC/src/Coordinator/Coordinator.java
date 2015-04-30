@@ -3,14 +3,12 @@ package Coordinator;
 import Cohort.Cohort;
 import Transaction.SubTransaction;
 import Transaction.Transaction;
-
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
 public interface Coordinator extends Remote {
-//    boolean newCohort(String databaseURL, String user, String pass, String name) throws RemoteException;
     boolean newCohort(Cohort cohort) throws RemoteException;
     boolean transaction(ArrayList<SubTransaction> requests) throws RemoteException;
     CoordinatorLogger getLogger() throws RemoteException ;

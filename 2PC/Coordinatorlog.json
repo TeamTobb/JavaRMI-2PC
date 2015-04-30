@@ -1,6 +1,6 @@
 [{
   "status" : "INIT",
-  "id" : 1430334399290,
+  "id" : 1430403382115,
   "transaction" : {
     "subTransactions" : [ {
       "db_name" : "BilDB",
@@ -9,18 +9,18 @@
       "db_name" : "FlyDB",
       "query" : "INSERT INTO biletter VALUES(DEFAULT,'passasjer')"
     } ],
-    "transID" : 1430334399290
+    "transID" : 1430403382115
   }
 },{
   "status" : "WAIT",
-  "id" : 1430334399290,
+  "id" : 1430403382115,
   "transaction" : null
 },{
   "status" : "COMMIT",
-  "id" : 1430334399290,
+  "id" : 1430403382115,
   "transaction" : null
 },{
   "status" : "FINISHED",
-  "id" : 1430334399290,
+  "id" : 1430403382115,
   "transaction" : null
 }

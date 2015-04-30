@@ -71,6 +71,7 @@ public class CohortImpl extends UnicastRemoteObject implements Cohort {
         return dbname;
     }
 
+    @Override
 	public boolean commit(long id) throws RemoteException{
         if(shouldNotCommit) return false;
         System.out.println("Logging status COMMIT: " + id);
@@ -88,6 +89,7 @@ public class CohortImpl extends UnicastRemoteObject implements Cohort {
         }
     }
 
+    @Override
     public boolean rollback(long id) throws RemoteException {
         System.out.println("Logging status ABORT: " + id);
         logger.log(new CohortLog(id, CohortStatus.ABORT));
@@ -104,6 +106,7 @@ public class CohortImpl extends UnicastRemoteObject implements Cohort {
         }
     }
 
+    @Override
     public void executeAndCommit(String sql) throws RemoteException{
         try{
             Statement st = this.con.createStatement();
@@ -117,6 +120,7 @@ public class CohortImpl extends UnicastRemoteObject implements Cohort {
         }
     }
 
+    @Override
     public Coordinator getCoord() throws RemoteException {
         return coord;
     }

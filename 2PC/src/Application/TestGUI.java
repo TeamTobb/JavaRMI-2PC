@@ -8,9 +8,6 @@ import java.awt.*;
 import java.rmi.Naming;
 import java.util.ArrayList;
 
-/**
- * Created by Jorgen on 27/04/15.
- */
 public class TestGUI extends JFrame{
     private Coordinator coordinator;
 
@@ -19,12 +16,9 @@ public class TestGUI extends JFrame{
         this.coordinator = coordinator;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new FlowLayout());
-
         JButton but1 = new JButton("Hans bestiller pakkereise. Det er nok pakkereiser.");
         but1.addActionListener(e -> {
             try {
-//                coordinator.newCohort((Cohort)Naming.lookup("rmi://10.0.1.12:2020/CohortImpl1"));
-//                coordinator.newCohort((Cohort)Naming.lookup("rmi://10.0.1.7:2020/CohortImpl2"));
                 SubTransaction trans1 = new SubTransaction("BilDB", "INSERT INTO biler VALUES(DEFAULT,'brafarg')");
                 SubTransaction trans2 = new SubTransaction("FlyDB", "INSERT INTO biletter VALUES(DEFAULT,'passasjer')");
                 ArrayList<SubTransaction> sts = new ArrayList<>();
@@ -66,7 +60,6 @@ public class TestGUI extends JFrame{
             System.out.println(coordinator);
             TestGUI gui = new TestGUI(coordinator);
             gui.setVisible(true);
-            System.out.println("done");
         }catch(Exception e){
             e.printStackTrace();
         }

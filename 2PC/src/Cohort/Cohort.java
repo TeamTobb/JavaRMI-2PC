@@ -1,7 +1,6 @@
 package Cohort;
 
 import Coordinator.Coordinator;
-
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 

@@ -2,7 +2,6 @@ package Coordinator;
 
 import Cohort.Cohort;
 import Transaction.SubTransaction;
-
 import java.rmi.RemoteException;
 import java.util.*;
 

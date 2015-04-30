@@ -10,15 +10,12 @@ import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
 
 public class CohortHost extends JFrame {
-    boolean color = true;
     private CohortImpl cohort;
-    private JTextArea textArea = new JTextArea(15, 30);
+    private JTextArea textArea = new JTextArea(25, 40);
     private TextAreaOutputStream taOutputStream = new TextAreaOutputStream(textArea, "Log");
-    private String objectname;
 
     public CohortHost(CohortImpl cohort, String objectname){
         super();
-        this.objectname = objectname;
         this.cohort = cohort;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new FlowLayout());
@@ -31,7 +28,6 @@ public class CohortHost extends JFrame {
         JToggleButton shouldNotRecoverButton = new JToggleButton("Disable commit");
 
         shouldNotRecoverButton.addItemListener(ev -> cohort.changeShouldCommit());
-
         recoverButton.addActionListener(e -> cohort.recover());
         exitButton.addActionListener(e -> {
             try {

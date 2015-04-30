@@ -3,7 +3,6 @@ package Cohort;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Serializable;
@@ -17,7 +16,6 @@ import java.util.List;
 public class CohortLogger implements Serializable{
     private String fileName;
     private FileWriter fileWriter;
-
     public CohortLogger(String dbName) {
         this.fileName = dbName + ".json";
     }
@@ -42,18 +40,6 @@ public class CohortLogger implements Serializable{
     }
 
     public static List<CohortLog> getLogItems(String fileName) {
-/*
-        ObjectMapper mapper = new ObjectMapper();
-        List<CohortLog> logItems = null;
-        try {
-            logItems = mapper.readValue(new File(fileName), new TypeReference<List<CohortLog>>(){});
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return logItems;
-
-
-*/
         List<CohortLog> logItems = null;
         try {
             byte[] encoded = Files.readAllBytes(Paths.get(fileName));

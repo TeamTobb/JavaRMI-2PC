@@ -28,10 +28,7 @@ public class TextAreaOutputStream extends OutputStream {
 
     @Override
     public void write(int b) throws IOException {
-
-        if (b == '\r')
-            return;
-
+        if (b == '\r')  return;
         if (b == '\n') {
             final String text = sb.toString() + "\n";
             SwingUtilities.invokeLater(() -> textArea.append(text));
@@ -39,7 +36,6 @@ public class TextAreaOutputStream extends OutputStream {
             sb.append(title + "> ");
             return;
         }
-
         sb.append((char) b);
     }
 }
